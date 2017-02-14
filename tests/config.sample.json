@@ -1,0 +1,5 @@
+{
+    "api_key":"Your Lingxi API KEY",
+    "api_secret":"Your Lingxi API Secret",
+    "test_form_id":"Form id for testing"
+}
