@@ -1,0 +1,12 @@
+{
+    "name": "sardo/pingjia",
+    "authors": [
+        {
+            "name": "Sardo Ip",
+            "email": "sardo@pixelactionstudio.com"
+        }
+    ],
+    "require": {
+        "lingxi/api-authentication": "^0.0.4"
+    }
+}
