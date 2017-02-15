@@ -9,21 +9,21 @@ use PHPUnit\Framework\TestCase;
 class LingxiTest extends TestCase{
     public function testGetFormList(){
         $conf = new Config('config.json');
-        $apiKey = $conf->get('api_key');
-        $apiSecret = $conf->get('api_secret');
-        $apiClient = new Client($apiKey, $apiSecret);
-        $formList = getFormList($apiClient);
-        $this->assertNotEmpty($formList);
+        $api_key = $conf->get('api_key');
+        $api_secret = $conf->get('api_secret');
+        $api_client = new Client($api_key, $api_secret);
+        $form_list = get_form_list($api_client);
+        $this->assertNotEmpty($form_list);
     }
 
     public function testGetFormFill(){
         $conf = new Config('config.json');
-        $apiKey = $conf->get('api_key');
-        $apiSecret = $conf->get('api_secret');
-        $formId = $conf->get('test_form_id');
-        $apiClient = new Client($apiKey, $apiSecret);
-        $fillList = getFormFill($apiClient, $formId);
-        $this->assertNotEmpty($fillList);
+        $api_key = $conf->get('api_key');
+        $api_secret = $conf->get('api_secret');
+        $form_id = $conf->get('test_form_id');
+        $api_client = new Client($api_key, $api_secret);
+        $fill_list = get_form_fill($api_client, $form_id);
+        $this->assertNotEmpty($fill_list);
     }
 }
 ?>
