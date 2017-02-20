@@ -14,17 +14,17 @@ include_once(plugin_dir_path( __FILE__ ) . 'lib/lingxi.php');
 
 use Lingxi\Signature\Client;
 
-function add_css_file() {
-	wp_enqueue_style('lingxi-form-css', plugins_url('lingxi-form/css/lingxi_form.css'));
-}
-
-add_action('wp_enqueue_scripts', 'add_css_file');
-
 class Lingxi_Form_Widget extends WP_Widget {
+	private function add_css_file() {
+		wp_enqueue_style('lingxi-form-css', plugins_url('lingxi-form/css/lingxi_form.css'));
+	}
+
 	public function __construct() {
 		parent::__construct('lingxi_form_widget',
 		__('灵析表单', 'lingxi_form_widget' ), // Name
 		array('description' => __('显示灵析表单签署人数', 'lingxi_form_widget' )));
+
+		add_action('wp_enqueue_scripts', 'add_css_file');
 	}
 
 	/**
@@ -37,7 +37,9 @@ class Lingxi_Form_Widget extends WP_Widget {
 		$api_key = $instance['api_key'];
 		$api_secret = $instance['api_secret'];
 		$form = $instance['form'];
-        $form_article = $instance['form_article'];
+		$form_summary = $instance['form_summary'];
+		$form_article = $instance['form_article'];
+
 
 		echo $args['before_widget'];
 		if (!empty($instance['title'])) {
@@ -58,7 +60,7 @@ class Lingxi_Form_Widget extends WP_Widget {
 
 				echo '<div class="lingxi-form">';
 				echo '<div class="lingxi-form-title">' . $form_data['attributes']['title'] . '</div></br>';
-				echo '<div class="lingxi-form-summary">' . $form_data['attributes']['summary'] . '</div></br>';
+				echo '<div class="lingxi-form-summary">' . $form_summary . '</div></br>';
 				echo '<hr class="lingxi-form-line"/>';
 				echo '<div class="lingxi-countersign"><i class="fa fa-users" aria-hidden="true"></i>' . $countersigned_number . ' <p>Supporters</p> </div>';
 				echo '<a href="' .  $form_article . '"class="lingxi-btn">现在签署</a>';
@@ -75,13 +77,14 @@ class Lingxi_Form_Widget extends WP_Widget {
 	* @param array $new_instance
 	* @param array $old_instance
 	*/
-	public function update( $new_instance, $old_instance ) {
+	public function update($new_instance, $old_instance) {
 		$instance = array();
 		$instance['title'] = (!empty( $new_instance['title'])) ? strip_tags($new_instance['title']): '';
 		$instance['api_key'] = (!empty($new_instance['api_key'])) ? strip_tags($new_instance['api_key']): '';
 		$instance['api_secret'] = (!empty($new_instance['api_secret'])) ? strip_tags($new_instance['api_secret']): '';
 		$instance['form'] = (!empty($new_instance['form'])) ? strip_tags($new_instance['form']): '';
-        $instance['form_article'] = (!empty($new_instance['form_article'])) ? strip_tags($new_instance['form_article']): '';
+		$instance['form_summary'] = (!empty($new_instance['form_summary'])) ? $new_instance['form_summary']: '';
+		$instance['form_article'] = (!empty($new_instance['form_article'])) ? strip_tags($new_instance['form_article']): '';
 		return $instance;
 	}
 
@@ -95,6 +98,7 @@ class Lingxi_Form_Widget extends WP_Widget {
 		$api_key = !empty($instance['api_key']) ? $instance['api_key'] : __('', 'lingxi_form_widget' );
 		$api_secret = !empty($instance['api_secret']) ? $instance['api_secret'] : __('', 'lingxi_form_widget' );
 		$form = !empty( $instance['form'] ) ? $instance['form'] : __('', 'lingxi_form_widget' );
+		$form_summary = !empty($instance['form_summary'] ) ? $instance['form_summary'] : __('<img class="lingxi-form-image" src="你的表单图片网址" />', 'lingxi_form_widget' );
 		$form_article = !empty($instance['form_article'] ) ? $instance['form_article'] : __('', 'lingxi_form_widget' );
 
 		if(!empty($api_key && $api_secret)){
@@ -138,6 +142,11 @@ class Lingxi_Form_Widget extends WP_Widget {
 			</p>
 		<?php endif ?>
 	<?php endif ?>
+	<p>
+		<label for="<?php echo $this->get_field_id('form_summary'); ?>"><?php _e('表单简介：'); ?></label>
+		<textarea class="widefat" id="<?php echo $this->get_field_id('form_summary'); ?>" name="<?php echo $this->get_field_name('form_summary'); ?>" rows="10"><?php echo $form_summary; ?></textarea>
+	</p>
+
 	<p>
 		<label for="<?php echo $this->get_field_id('form_article'); ?>"><?php _e('表单文章网址：'); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('form_article'); ?>" name="<?php echo $this->get_field_name('form_article'); ?>" type="text" value="<?php echo esc_attr($form_article); ?>">
