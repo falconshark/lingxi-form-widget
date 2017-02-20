@@ -14,17 +14,17 @@ include_once(plugin_dir_path( __FILE__ ) . 'lib/lingxi.php');
 
 use Lingxi\Signature\Client;
 
+function add_css_file() {
+	wp_enqueue_style('lingxi-form-css', plugins_url('lingxi-form/css/lingxi_form.css'));
+}
+add_action('wp_enqueue_scripts', 'add_css_file');
+
 class Lingxi_Form_Widget extends WP_Widget {
-	private function add_css_file() {
-		wp_enqueue_style('lingxi-form-css', plugins_url('lingxi-form/css/lingxi_form.css'));
-	}
 
 	public function __construct() {
 		parent::__construct('lingxi_form_widget',
 		__('灵析表单', 'lingxi_form_widget' ), // Name
 		array('description' => __('显示灵析表单签署人数', 'lingxi_form_widget' )));
-
-		add_action('wp_enqueue_scripts', 'add_css_file');
 	}
 
 	/**
@@ -98,7 +98,7 @@ class Lingxi_Form_Widget extends WP_Widget {
 		$api_key = !empty($instance['api_key']) ? $instance['api_key'] : __('', 'lingxi_form_widget' );
 		$api_secret = !empty($instance['api_secret']) ? $instance['api_secret'] : __('', 'lingxi_form_widget' );
 		$form = !empty( $instance['form'] ) ? $instance['form'] : __('', 'lingxi_form_widget' );
-		$form_summary = !empty($instance['form_summary'] ) ? $instance['form_summary'] : __('<img class="lingxi-form-image" src="你的表单图片网址" />', 'lingxi_form_widget' );
+		$form_summary = !empty($instance['form_summary'] ) ? $instance['form_summary'] : __('<img class="lingxi-form-image" src="" />', 'lingxi_form_widget' );
 		$form_article = !empty($instance['form_article'] ) ? $instance['form_article'] : __('', 'lingxi_form_widget' );
 
 		if(!empty($api_key && $api_secret)){
