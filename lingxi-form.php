@@ -6,7 +6,7 @@ Description: A widget that display Lingxi form fill data.
 Version: 1.0
 Author: Sardo Ip
 Author URI: http://blog.sardo.work
-License: MIT
+License: GPL
 */
 
 include_once(plugin_dir_path( __FILE__ ) . 'vendor/autoload.php');
