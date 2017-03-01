@@ -17,6 +17,7 @@ use Lingxi\Signature\Client;
 function add_css_file() {
 	wp_enqueue_style('lingxi-form-css', plugins_url('lingxi-form/css/lingxi_form.css'));
 }
+
 add_action('wp_enqueue_scripts', 'add_css_file');
 
 class Lingxi_Form_Widget extends WP_Widget {
@@ -86,7 +87,7 @@ class Lingxi_Form_Widget extends WP_Widget {
 		$instance['api_key'] = (!empty($new_instance['api_key'])) ? strip_tags($new_instance['api_key']): '';
 		$instance['api_secret'] = (!empty($new_instance['api_secret'])) ? strip_tags($new_instance['api_secret']): '';
 		$instance['form'] = (!empty($new_instance['form'])) ? strip_tags($new_instance['form']): '';
-		$instance['form_summary'] = (!empty($new_instance['form_summary'])) ? $new_instance['form_summary']: '';
+		$instance['form_summary'] = (!empty($new_instance['form_summary_editor'])) ? $new_instance['form_summary_editor']: '';
 		$instance['form_article'] = (!empty($new_instance['form_article'])) ? strip_tags($new_instance['form_article']): '';
 		return $instance;
 	}
@@ -108,6 +109,12 @@ class Lingxi_Form_Widget extends WP_Widget {
 			$api_client = new Client($api_key, $api_secret);
 			$form_options = get_form_list($api_client);
 		}
+
+		$settings = array(
+			'media_buttons' => true,
+			'textarea_rows' => 5,
+			'textarea_name' => $this->get_field_name('form_summary_editor')
+		);
 
 		?>
 		<p>
@@ -145,9 +152,10 @@ class Lingxi_Form_Widget extends WP_Widget {
 			</p>
 		<?php endif ?>
 	<?php endif ?>
+	<input type="hidden" id="<?php echo $this->get_field_id('form_summary_id') ?>" name="<?php echo $this->get_field_name('form_summary_id') ?>" value="<?php echo $this->get_field_id('form_summary') ?>" />
 	<p>
 		<label for="<?php echo $this->get_field_id('form_summary'); ?>"><?php _e('表单简介：'); ?></label>
-		<textarea class="widefat" id="<?php echo $this->get_field_id('form_summary'); ?>" name="<?php echo $this->get_field_name('form_summary'); ?>" rows="10"><?php echo $form_summary; ?></textarea>
+		<?php wp_editor($form_summary, $this->get_field_id('form_summary'), $settings); ?>
 	</p>
 
 	<p>
