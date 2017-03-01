@@ -50,6 +50,7 @@ class Lingxi_Form_Widget extends WP_Widget {
 			$api_client = new Client($api_key, $api_secret);
 			$form_data = get_form($api_client, $form);
 			$countersigned = get_form_fill($api_client, $form);
+			$qr_code = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' . $form_article;
 
 			if(!empty($form_data)){
 				if(!empty($countersigned)){
@@ -62,8 +63,10 @@ class Lingxi_Form_Widget extends WP_Widget {
 				echo '<div class="lingxi-form-title">' . $form_data['attributes']['title'] . '</div></br>';
 				echo '<div class="lingxi-form-summary">' . $form_summary . '</div></br>';
 				echo '<hr class="lingxi-form-line"/>';
-				echo '<div class="lingxi-countersign"><i class="fa fa-users" aria-hidden="true"></i>' . $countersigned_number . ' <p>Supporters</p> </div>';
-				echo '<a href="' .  $form_article . '"class="lingxi-btn">现在签署</a>';
+				echo '<div class="lingxi-countersign">截至目前，已经有' . $countersigned_number . '人参与联署</p> </div>';
+				echo '<a href="' .  $form_article . '"class="lingxi-btn">您可以点击此处参与联署</a>';
+				echo '<p>也可以扫描下方二维码参与联署:</p>';
+				echo '<img src="'. $qr_code . '"/>';
 				echo '</div>';
 			}
 		}

@@ -1,0 +1,18 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+  config.vm.box = "base"
+
+  config.vm.host_name = "wordpress-lingxi"
+
+  config.vm.network "public_network"
+
+  config.vm.synced_folder "../", "/var/www/html/wordpress/wp-content/plugins", create: true, group: "www-data", owner: "www-data"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize [ "modifyvm", :id, "--memory", 1024]
+    vb.customize [ "modifyvm", :id, "--name", "lingxi"]
+  end
+end
