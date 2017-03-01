@@ -64,8 +64,8 @@ class Lingxi_Form_Widget extends WP_Widget {
 				echo '<div class="lingxi-form-title">' . $form_data['attributes']['title'] . '</div></br>';
 				echo '<div class="lingxi-form-summary">' . $form_summary . '</div></br>';
 				echo '<hr class="lingxi-form-line"/>';
-				echo '<div class="lingxi-countersign">截至目前，已经有' . $countersigned_number . '人参与联署</p> </div>';
-				echo '<a href="' .  $form_article . '"class="lingxi-btn">您可以点击此处参与联署</a>';
+				echo '<div class="lingxi-countersign">截至目前，已经有<span>' . $countersigned_number . '</span>人参与联署</p> </div>';
+				echo '<a href="' .  $form_article . '"class="lingxi-link">您可以点击此处参与联署</a>';
 				echo '<p>也可以扫描下方二维码参与联署:</p>';
 				echo '<img src="'. $qr_code . '"/>';
 				echo '</div>';
@@ -112,8 +112,9 @@ class Lingxi_Form_Widget extends WP_Widget {
 
 		$settings = array(
 			'media_buttons' => true,
-			'textarea_rows' => 5,
-			'textarea_name' => $this->get_field_name('form_summary_editor')
+			'textarea_name' => $this->get_field_name('form_summary_editor'),
+			'teeny' => true,
+			'dfw' => true,
 		);
 
 		?>

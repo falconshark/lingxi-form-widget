@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "public_network"
 
-  config.vm.synced_folder "../", "/var/www/html/wordpress/wp-content/plugins", create: true, group: "www-data", owner: "www-data"
+  config.vm.synced_folder "../", "/var/www/html/wordpress/wp-content/plugins/lingxi-form", create: true, group: "www-data", owner: "www-data"
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize [ "modifyvm", :id, "--memory", 1024]
