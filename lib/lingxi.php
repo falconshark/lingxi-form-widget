@@ -40,16 +40,16 @@ function get_form($api_client, $id){
 * @param  int $id Target form id.
 * @return object $result Result which contain form fill list.
 */
-function get_form_fill($api_client, $id){
+
+function get_form_fill_count($api_client, $id, $page = 1){
 	try {
 		$data = ['form_id' => $id];
 		$response = $api_client->get('/form/form_fill/list', $data);
-		$result = $response->getData();
+		$result = $response->getMeta()['pagination']['total'];
 		return $result;
-
 	} catch (\Exception $e) {
 		if($e->getMessage() !== 'Lingxi Api return error: Not found model'){
-			echo $e->getMessage();	
+			echo $e->getMessage();
 		}
 	}
 }

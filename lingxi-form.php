@@ -50,16 +50,11 @@ class Lingxi_Form_Widget extends WP_Widget {
 		if(!empty($form)){
 			$api_client = new Client($api_key, $api_secret);
 			$form_data = get_form($api_client, $form);
-			$countersigned = get_form_fill($api_client, $form);
 			$qr_code = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' . $form_article;
 
 			if(!empty($form_data)){
-				if(!empty($countersigned)){
-					$countersigned_number = count($countersigned);
-				}else{
-					$countersigned_number = 0;
-				}
-
+				$countersigned_number = get_form_fill_count($api_client, $form);
+				
 				echo '<div class="lingxi-form">';
 				echo '<div class="lingxi-form-title">' . $form_data['attributes']['title'] . '</div></br>';
 				echo '<div class="lingxi-form-summary">' . $form_summary . '</div></br>';

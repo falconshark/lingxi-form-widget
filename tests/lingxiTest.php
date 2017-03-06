@@ -26,14 +26,14 @@ class LingxiTest extends TestCase{
         $this->assertNotEmpty($form);
     }
 
-    public function testGetFormFill(){
+    public function testGetFormFillCount(){
         $conf = new Config('config.json');
         $api_key = $conf->get('api_key');
         $api_secret = $conf->get('api_secret');
         $form_id = $conf->get('test_form_id');
         $api_client = new Client($api_key, $api_secret);
-        $fill_list = get_form_fill($api_client, $form_id);
-        $this->assertNotEmpty($fill_list);
+        $total = get_form_fill_count($api_client, $form_id);
+        $this->assertNotEmpty($total);
     }
 }
 ?>
